@@ -3,27 +3,24 @@
 #include <stdio.h>
 
 /**
- * main - Determines if a number is positive, negative or zero.
- *
- * Return: Always 0 (Success)
- */
-positive_or_negative(int n)
-{
-	int n;
+* positive_or_negative - Determines if a number is positive, negative, or zero.
+* @n: The number to be checked
+*
+* Return: Always 0 (Success)
+*/
 
-	srand(time(0));
-	n = rand() - RAND_MAX / 2;
-	if (n > 0)
-	{
-		printf("%d is positive\n", n);
-	}
-	else if (n == 0)
-	{
-		printf("%d is zero\n", n);
-	}
-	else
-	{
-		printf("%d is negative\n", n);
-	}
-	return (0);
+void positive_or_negative(int n)
+{
+if (n > 0)
+{
+printf("%d is positive\n", n);
+}
+else if (n == 0)
+{
+printf("%d is zero\n", n);
+}
+else
+{
+printf("%d is negative\n", n);
+}
 }

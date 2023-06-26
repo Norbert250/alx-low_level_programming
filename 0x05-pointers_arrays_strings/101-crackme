@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/**
+* generatePassword - Generate a random password of given length
+* @length: Length of the password
+*/
+void generatePassword(int length)
+{
+char password[length + 1];
+const char characters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+int i;
+
+srand(time(NULL)); // Initialize random number generator
+
+for (i = 0; i < length; i++)
+{
+int randomIndex = rand() % (sizeof(characters) - 1);
+password[i] = characters[randomIndex];
+}
+
+password[length] = '\0';
+
+printf("Generated Password: %s\n", password);
+}
+
+/**
+* main - Entry point of the program
+*
+* Return: Always 0
+*/
+int main(void)
+{
+int passwordLength;
+
+printf("Enter the desired password length: ");
+scanf("%d", &passwordLength);
+
+generatePassword(passwordLength);
+
+return 0;
+}

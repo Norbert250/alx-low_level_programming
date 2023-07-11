@@ -9,22 +9,24 @@
  */
 int count_word(char *s)
 {
-    int flag = 0, c, w = 0;
+	int flag, c, w;
 
-    for (c = 0; s[c] != '\0'; c++)
-    {
-        if (s[c] == ' ')
-            flag = 0;
-        else if (flag == 0)
-        {
-            flag = 1;
-            w++;
-        }
-    }
+	flag = 0;
+	w = 0;
 
-    return w;
+	for (c = 0; s[c] != '\0'; c++)
+	{
+		if (s[c] == ' ')
+			flag = 0;
+		else if (flag == 0)
+		{
+			flag = 1;
+			w++;
+		}
+	}
+
+	return (w);
 }
-
 /**
  * **strtow - splits a string into words
  * @str: string to split
@@ -34,52 +36,42 @@ int count_word(char *s)
  */
 char **strtow(char *str)
 {
-    char **matrix, *tmp;
-    int i, k = 0, len = 0, words, c = 0, start = 0, end;
+	char **matrix, *tmp;
+	int i, k = 0, len = 0, words, c = 0, start, end;
 
-    if (str == NULL || *str == '\0')
-        return NULL;
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
+		return (NULL);
 
-    while (str[len])
-        len++;
+	matrix = (char **) malloc(sizeof(char *) * (words + 1));
+	if (matrix == NULL)
+		return (NULL);
 
-    words = count_word(str);
-    if (words == 0)
-        return NULL;
+	for (i = 0; i <= len; i++)
+	{
+		if (str[i] == ' ' || str[i] == '\0')
+		{
+			if (c)
+			{
+				end = i;
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (start < end)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				matrix[k] = tmp - c;
+				k++;
+				c = 0;
+			}
+		}
+		else if (c++ == 0)
+			start = i;
+	}
 
-    matrix = (char **) malloc(sizeof(char *) * (words + 1));
-    if (matrix == NULL)
-        return NULL;
+	matrix[k] = NULL;
 
-    for (i = 0; i <= len; i++)
-    {
-        if (str[i] == ' ' || str[i] == '\0')
-        {
-            if (c)
-            {
-                end = i;
-                tmp = (char *) malloc(sizeof(char) * (c + 1));
-                if (tmp == NULL)
-                {
-                    // Free previously allocated memory for successful allocations
-                    for (i = 0; i < k; i++)
-                        free(matrix[i]);
-                    free(matrix);
-                    return NULL;
-                }
-                while (start < end)
-                    *tmp++ = str[start++];
-                *tmp = '\0';
-                matrix[k] = tmp - c;
-                k++;
-                c = 0;
-            }
-        }
-        else if (c++ == 0)
-            start = i;
-    }
-
-    matrix[k] = NULL;
-
-    return matrix;
+	return (matrix);
 }
